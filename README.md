@@ -38,6 +38,24 @@ establishment of an absolute Tyranny over these States. To prove this, let Facts
 candid world.
 """
 ```
+```
+let array = declarationOfIndependence.components(separatedBy: " ")
+var wordsMoreThanFiveArray = [String]()
+wordsMoreThanFiveArray = array.filter({$0.count > 5})
+var dictionary = [String: Int]()
+var wordCount = 0
+for word in wordsMoreThanFiveArray {
+if word.count > 5 {
+wordCount += 1
+}
+dictionary.updateValue(wordCount, forKey: word)
+}
+print(dictionary.sorted(by: {$0.value > $1.value}))
+```
+
+
+
+
 
 ## Question 2
 
@@ -47,6 +65,21 @@ Make an array that contains all elements that appear more than twice in someRepe
 ```swift
 var someRepeatsAgain = [25,11,30,31,50,28,4,37,13,20,24,38,28,14,44,33,7,43,39,35,36,42,1,40,7,14,23,46,21,39,11,42,12,38,41,48,20,23,29,24,50,41,38,23,11,30,50,13,13,16,10,8,3,43,10,20,28,39,24,36,21,13,40,25,37,39,31,4,46,20,38,2,7,11,11,41,45,9,49,31,38,23,41,16,49,29,14,6,6,11,5,39,13,17,43,1,1,15,25]
 ```
+```
+var dict = [Int: Int]()
+var emptyArray = [Int]()
+for number in someRepeatsAgain{
+    dict[number] = (dict[number] ?? 0) + 1
+}
+
+for ( key, value) in dict {
+    if value > 2 {
+    emptyArray.append(key)
+    }
+}
+print(emptyArray.sorted())
+
+```
 
 ## Question 3
 
@@ -55,7 +88,16 @@ Identify if there are 3 integers in the following array that sum to 10. If so, p
 ```swift
 var tripleSumArr = [-20,-14, -8,-5,-3,-2,1,2,3,4,9,15,20,30]
 ```
+```
+var codeString = "aldfjaekwjnfaekjnf"
+var dict = [String:Int]()
 
+for (letter, value) in letterValues {
+    if codeString.contains(letter) {
+    dict[letter] = value
+}
+}
+```
 
 ## Question 3
 
@@ -128,7 +170,53 @@ a. Given the structs above, add a method to `Receipt` that returns the total cos
 b. Write a function that takes in an array of `Receipts` and returns an array of `Receipts` that match a given store name
 
 c. Write a function that takes in an array of `Receipts` and returns an array of those receipts sorted by price
+```
+struct Receipt {
+let storeName: String
+let items: [ReceiptItem]
 
+func totalCost() -> Double {
+var priceArr = [Double]()
+for item in items {
+priceArr.append(item.price)
+}
+
+return priceArr.reduce(0, +)
+
+}
+}
+
+struct ReceiptItem {
+let name: String
+let price: Double
+}
+
+func sameNames(receipt: [Receipt], storeName: String) -> [Receipt]  {
+var returnArray =  receipt.filter { ($0.storeName == storeName)
+
+}
+return returnArray
+}
+
+func sortedByPrice(ticket: [Receipt]) -> [Receipt] {
+var sortedPrice = ticket.sorted { $0.totalCost() < $1.totalCost()
+
+}
+return sortedPrice
+}
+
+
+
+let apple = ReceiptItem(name: "Apple", price: 2.00)
+let cereal = ReceiptItem(name: "Captain Crunch", price: 4.00)
+let soda = ReceiptItem(name: "Coke", price: 2.50)
+let itemsArr = [apple, cereal, soda]
+
+
+let recipet = Receipt(storeName: "Whole foods", items: itemsArr)
+
+print(recipet.totalCost())
+```
 ## Question 6
 
 a. The code below doesn't compile.  Why?  Fix it so that it does compile.
